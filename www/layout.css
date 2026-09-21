@@ -1,0 +1,73 @@
+/* Layout pass -- spacing rhythm, container proportions, and one narrow-width
+   defect fix. No color, type, or component changes; see PRODUCT.md. */
+
+/* Sidebar controls: group related fields by proximity instead of one
+   uniform gap between every control. .ic-group wraps a logical cluster
+   (e.g. "bandwidth method", "grid + tolerance settings", "run action");
+   consecutive groups get real separation, content inside a group keeps
+   Shiny's normal (tighter) spacing. */
+.ic-group + .ic-group {
+  margin-top: 22px;
+}
+
+/* helpText() renders as an inline <span class="help-block">. Being inline
+   lets a following block/focusable element (e.g. a Run button placed right
+   after it) flow up onto its trailing line once that line gets short
+   enough to leave room beside it, instead of always starting its own line.
+   Affects every helpText()+button pairing in the app, not just one. */
+.help-block {
+  display: block;
+}
+
+/* Results panel: constrain the Plot and Table sub-tabs to a sensible
+   reading/viewing width instead of stretching a fixed-size plot image or a
+   short two-column summary table across whatever width the sidebar layout
+   happens to leave (which grows with the browser window). The Map tab is
+   deliberately left unconstrained -- more visible width is genuinely
+   useful for a pannable basemap, unlike a static image or a six-row table. */
+.ic-results-frame {
+  max-width: 960px;
+}
+
+/* Empty-state placeholder for a not-yet-run Plot/Map/Table (Shiny's
+   validate()/need() message). Give it real presence -- a framed, centered
+   panel matching the eventual result's footprint -- instead of one small
+   line of text floating at the top of an otherwise-blank panel. Scoped to
+   .ic-result-pane so ordinary inline validation messages elsewhere in the
+   app (e.g. sidebar form guidance) are untouched. */
+.ic-result-pane .shiny-output-error-validation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 24px;
+  color: #6c757d;
+  font-size: 0.95rem;
+  text-align: center;
+  border: 1px dashed #dee2e6;
+  border-radius: 6px;
+  background: #fafbfc;
+}
+
+/* Data & window tab: cap the intro prose's reading measure instead of
+   stretching it across whatever width the layout leaves once the form
+   column is wide enough not to wrap its own labels. */
+.ic-intro-copy {
+  max-width: 640px;
+}
+
+/* Data & window tab: the lead decision (data source, and whether x/y are
+   lon/lat) gets real visual weight, ahead of the collapsed study-region
+   accordion below it. */
+.ic-hero-choice {
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  background: #f3f6f9;
+  border-radius: 6px;
+}
+.ic-hero-choice h5 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: #2C5F8A;
+}
